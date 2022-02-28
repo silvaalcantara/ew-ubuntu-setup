@@ -32,18 +32,6 @@ cat ~/.ssh/id_rsa.pub | xclip -selection clipboard
 echo 'enabling workspaces for both screens' 
 gsettings set org.gnome.mutter workspaces-only-on-primary false
 
-echo 'installing zsh'
-sudo apt-get install zsh -y
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-chsh -s /bin/zsh
-
-echo 'installing tool to handle clipboard via CLI'
-sudo apt-get install xclip -y
-
-export alias pbcopy='xclip -selection clipboard'
-export alias pbpaste='xclip -selection clipboard -o'
-source ~/.zshrc
-
 echo 'installing maven'
 sudo apt install maven -y
 clear
@@ -83,40 +71,6 @@ echo 'installing chrome'
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 
-echo 'installing nvm' 
-sh -c "$(curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash)"
-
-export NVM_DIR="$HOME/.nvm" && (
-git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-cd "$NVM_DIR"
-git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-) && \. "$NVM_DIR/nvm.sh"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-source ~/.zshrc
-nvm --version
-nvm install 12
-nvm alias default 12
-node --version
-npm --version
-
-echo 'installing autosuggestions' 
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
-source ~/.zshrc
-
-echo 'installing theme'
-sudo apt install fonts-firacode -y
-wget -O ~/.oh-my-zsh/themes/node.zsh-theme https://raw.githubusercontent.com/skuridin/oh-my-zsh-node-theme/master/node.zsh-theme 
-sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="node"/g' ~/.zshrc
-
-echo 'installing meet franz' 
-wget https://github.com/meetfranz/franz/releases/download/v5.1.0/franz_5.1.0_amd64.deb -O franz.deb
-sudo dpkg -i franz.debchristian-kohler.path-intellisense
-sudo apt-get install -y -f 
-
 echo 'installing docker' 
 sudo apt-get remove docker docker-engine docker.io
 sudo apt install docker.io -y
@@ -132,25 +86,6 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-echo 'installing aws-cli' 
-sudo apt-get install awscli -y
-aws --version
-curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
-sudo dpkg -i session-manager-plugin.deb
-session-manager-plugin --version
-
-echo 'installing teamviewer'
-wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo apt install -y ./teamviewer_amd64.deb
-
-echo 'installing vnc-viewer'
-sudo apt-get install -y --no-install-recommends ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
-sudo apt-get install vnc4server -y 
-
-echo 'installing fzf'
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --all
-
 echo 'installing brave'
 curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
 source /etc/os-release
@@ -162,3 +97,25 @@ echo 'installing dbeaver'
 wget -c https://dbeaver.io/files/6.0.0/dbeaver-ce_6.0.0_amd64.deb
 sudo dpkg -i dbeaver-ce_6.0.0_amd64.deb
 sudo apt-get install -f
+
+echo 'installing zsh'
+sudo apt-get install zsh -y
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+chsh -s /bin/zsh
+
+echo 'installing tool to handle clipboard via CLI'
+sudo apt-get install xclip -y
+
+export alias pbcopy='xclip -selection clipboard'
+export alias pbpaste='xclip -selection clipboard -o'
+source ~/.zshrc
+
+echo 'installing theme'
+sudo apt install fonts-firacode -y
+wget -O ~/.oh-my-zsh/themes/node.zsh-theme https://raw.githubusercontent.com/skuridin/oh-my-zsh-node-theme/master/node.zsh-theme 
+sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="node"/g' ~/.zshrc
+
+echo 'installing autosuggestions' 
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+source ~/.zshrc
