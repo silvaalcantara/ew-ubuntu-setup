@@ -7,21 +7,19 @@ echo 'installing git'
 sudo apt install git -y
 
 echo "What name do you want to use in GIT user.name?"
-echo "For example, mine will be \"Erick Wendel\""
 read git_config_user_name
 git config --global user.name "$git_config_user_name"
 clear 
 
 echo "What email do you want to use in GIT user.email?"
-echo "For example, mine will be \"erick.workspace@gmail.com\""
 read git_config_user_email
 git config --global user.email $git_config_user_email
 clear
 
-echo "Can I set VIM as your default GIT editor for you? (y/n)"
+echo "Can I set NANO as your default GIT editor for you? (y/n)"
 read git_core_editor_to_vim
 if echo "$git_core_editor_to_vim" | grep -iq "^y" ;then
-	git config --global core.editor vim
+	git config --global core.editor nano
 else
 	echo "Okay, no problem. :) Let's move on!"
 fi
@@ -46,8 +44,20 @@ export alias pbcopy='xclip -selection clipboard'
 export alias pbpaste='xclip -selection clipboard -o'
 source ~/.zshrc
 
-echo 'installing vim'
-sudo apt install vim -y
+echo 'installing maven'
+sudo apt install maven -y
+clear
+
+echo 'installing postgresql'
+sudo apt install postgresql postgresql-contrib -y
+clear
+
+echo 'starting postgres service'
+sudo service postgresql start
+clear
+
+echo 'entering the psql shell to creating first database and users (press \q to exit)'
+sudo -u postgres psql
 clear
 
 echo 'installing code'
@@ -68,9 +78,6 @@ code --install-extension foxundermoon.shell-format
 code --install-extension pmneo.tsimporter
 code --install-extension waderyan.gitblame
 code --install-extension yzhang.markdown-all-in-one
-
-echo 'installing spotify' 
-snap install spotify
 
 echo 'installing chrome' 
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -109,60 +116,6 @@ echo 'installing meet franz'
 wget https://github.com/meetfranz/franz/releases/download/v5.1.0/franz_5.1.0_amd64.deb -O franz.deb
 sudo dpkg -i franz.debchristian-kohler.path-intellisense
 sudo apt-get install -y -f 
-
-echo 'installing slack' 
-wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
-sudo apt install ./slack-desktop-*.deb -y
-
-echo 'installing terminator'
-sudo apt-get update
-sudo apt-get install terminator -y
-
-echo 'adding dracula theme' 
-cat <<EOF >  ~/.config/terminator/config
-[global_config]
-  title_transmit_bg_color = "#ad7fa8"
-[keybindings]
-  close_term = <Primary>w
-  close_window = <Primary>q
-  new_tab = <Primary>t
-  new_window = <Primary>i
-  paste = <Primary>v
-  split_horiz = <Primary>e
-  split_vert = <Primary>d
-  switch_to_tab_1 = <Primary>1
-  switch_to_tab_10 = <Primary>0
-  switch_to_tab_2 = <Primary>2
-  switch_to_tab_3 = <Primary>3
-  switch_to_tab_4 = <Primary>4
-  switch_to_tab_5 = <Primary>5
-  switch_to_tab_6 = <Primary>6
-[layouts]
-  [[default]]
-    [[[child1]]]
-      parent = window0
-      type = Terminal
-    [[[window0]]]
-      parent = ""
-      type = Window
-[plugins]
-[profiles]
-  [[default]]
-    cursor_color = "#aaaaaa"
-EOF
-
-
-cat <<EOF >>  ~/.config/terminator/config
-[[Dracula]]
-    background_color = "#1e1f29"
-    background_darkness = 0.88
-    background_type = transparent
-    copy_on_selection = True
-    cursor_color = "#bbbbbb"
-    foreground_color = "#f8f8f2"
-    palette = "#000000:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#bbbbbb:#555555:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#ffffff"
-    scrollback_infinite = True
-EOF
 
 echo 'installing docker' 
 sudo apt-get remove docker docker-engine docker.io
